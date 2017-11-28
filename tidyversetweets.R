@@ -23,14 +23,8 @@ tidy_so <- map(tidyverse, query_tag) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
-  mutate(num_char = nchar(title)) %>%
-  arrange(desc(num_char))
-  
-  
-  
   filter(creation_date > ymd_hms(Sys.time()) - dminutes(5)) %>%
   as.list()
-
 
 pwalk(.l = tidy_so, .f = function(id, title, creation_date, link) {
   if (nchar(title) > 250) {
