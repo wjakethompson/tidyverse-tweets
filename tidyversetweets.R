@@ -1,5 +1,6 @@
 ### Setup ----------------------------------------------------------------------
-needed_packages <- c("devtools", "tidyverse", "glue", "stackr", "rtweet")
+needed_packages <- c("devtools", "tidyverse", "glue", "lubridate", "stackr",
+  "rtweet")
 load_packages <- function(x) {
   if (!(x %in% rownames(installed.packages()))) {
     if (x == "stackr") {
