@@ -1,28 +1,46 @@
 ### Setup ----------------------------------------------------------------------
-needed_packages <- c("devtools", "tidyverse", "glue", "lubridate", "stackr",
-  "rtweet")
-load_packages <- function(x) {
-  if (!(x %in% rownames(installed.packages()))) {
-    if (x == "stackr") {
-      devtools::install_github("dgrtwo/stackr")
-    } else {
-      install.packages(x, repos = "https://cran.rstudio.com/")
-    }
-  }
-  suppressPackageStartupMessages(require(x, character.only = TRUE))
-}
-vapply(needed_packages, load_packages, TRUE)
+library(tidyverse)
+library(glue)
+library(lubridate)
+library(stackr)
+library(rtweet)
 
 
 ### Query Stackoverflow API ----------------------------------------------------
-tidy_so <- stack_questions(pagesize = 100, tagged = "tidyverse") %>%
-  select(title, creation_date, link) %>%
+safe_query <- safely(stack_questions)
+query_tag <- function(tag) {
+  query <- safe_query(pagesize = 100, tagged = tag)
+}
+
+tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
+  "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI",
+  "stringr", "lubridate", "forcats", "hms", "blob", "rlang", "magrittr", "glue",
+  "recipes", "rsample", "modelr")
+
+tidy_so <- map(tidyverse, query_tag) %>%
+  map_dfr(~(.$result %>% as.tibble())) %>%
+  select(id = question_id, title, creation_date, link) %>%
+  distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
+  mutate(num_char = nchar(title)) %>%
+  arrange(desc(num_char))
+  
+  
+  
   filter(creation_date > ymd_hms(Sys.time()) - dminutes(5)) %>%
   as.list()
 
-pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
+
+pwalk(.l = tidy_so, .f = function(id, title, creation_date, link) {
+  if (nchar(title) > 250) {
+    trunc_points <- str_locate_all(title, " ") %>%
+      .[[1]] %>%
+      .[,1]
+    trunc <- max(trunc_points[which(trunc_points < 247)]) - 1
+    title <- paste0(str_sub(title, start = 1, end = trunc), "...")
+  }
+  
   tweet_text <- glue("{title} #tidyverse #rstats {link}")
   post_tweet(tweet_text)
 })
