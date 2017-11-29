@@ -41,5 +41,5 @@ pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   }
   
   tweet_text <- glue("{title} #tidyverse #rstats {link}")
-  post_tweet(tweet_text)
+  post_tweet(tweet_text, token = read_rds("~/.rtweet_token2.rds"))
 })
