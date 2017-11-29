@@ -4,6 +4,7 @@ library(glue)
 library(lubridate)
 library(stackr)
 library(rtweet)
+options(tibble.width = Inf)
 
 
 ### Query Stackoverflow API ----------------------------------------------------
