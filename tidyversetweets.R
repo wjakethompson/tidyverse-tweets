@@ -19,6 +19,7 @@ tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
 
 Sys.setenv(TZ = "America/Chicago")
 cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
+cur_time
 
 source("~/.Rprofile")
 
@@ -28,8 +29,11 @@ tidy_so <- map(tidyverse, query_tag) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
-  filter(creation_date > cur_time - dminutes(30)) %>%
-  as.list()
+  filter(creation_date > cur_time - dminutes(45))
+
+tidy_so
+
+tidy_so <- as.list()
 
 pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   if (nchar(title) > 250) {
