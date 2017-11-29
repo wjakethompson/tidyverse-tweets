@@ -28,14 +28,10 @@ tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
   select(.data$title, .data$creation_date, .data$link) %>%
   distinct() %>%
-  mutate(creation_date = ymd_hms(creation_date)) %>%
-  arrange(desc(creation_date))
-tidy_so
-
-tidy_so <- filter(tidy_so, creation_date > cur_time - dminutes(45))
-tidy_so
-
-tidy_so <- as.list(tidy_so)
+  mutate(creation_date = ymd_hms(creation_date, tz = Sys.timezone())) %>%
+  arrange(creation_date) %>%
+  filter(creation_date > cur_time - dminutes(5)) %>%
+  as.list()
 
 pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   if (nchar(title) > 250) {
