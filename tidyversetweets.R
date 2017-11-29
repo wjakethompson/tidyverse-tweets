@@ -20,6 +20,8 @@ tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
 Sys.setenv(TZ = "America/Chicago")
 cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
 
+source("~/.Rprofile")
+
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
   select(.data$title, .data$creation_date, .data$link) %>%
