@@ -28,8 +28,7 @@ tidy_so <- map(tidyverse, query_tag) %>%
   select(.data$title, .data$creation_date, .data$link) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
-  arrange(desc(creation_date)) %>%
-  filter(creation_date > cur_time - dminutes(45))
+  arrange(desc(creation_date))
 tidy_so
 
 tidy_so <- filter(tidy_so, creation_date > cur_time - dminutes(45))
