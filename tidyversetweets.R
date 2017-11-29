@@ -22,14 +22,14 @@ cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
 
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
-  select(id = question_id, title, creation_date, link) %>%
+  select(title, creation_date, link) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
   filter(creation_date > cur_time - dminutes(5)) %>%
   as.list()
 
-pwalk(.l = tidy_so, .f = function(id, title, creation_date, link) {
+pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   if (nchar(title) > 250) {
     trunc_points <- str_locate_all(title, " ") %>%
       .[[1]] %>%
