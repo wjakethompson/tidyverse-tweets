@@ -14,8 +14,8 @@ query_tag <- function(tag) {
 
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
   "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI",
-  "stringr", "lubridate", "forcats", "hms", "blob", "rlang", "magrittr", "glue",
-  "recipes", "rsample", "modelr")
+  "stringr", "lubridate", "forcats", "hms", "blob;r", "rlang", "magrittr",
+  "glue", "recipes", "rsample", "modelr")
 
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
