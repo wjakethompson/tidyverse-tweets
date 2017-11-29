@@ -22,7 +22,7 @@ cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
 
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
-  select(title, creation_date, link) %>%
+  select(.data$title, .data$creation_date, .data$link) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
