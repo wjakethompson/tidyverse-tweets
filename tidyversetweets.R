@@ -17,13 +17,16 @@ tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
   "stringr", "lubridate", "forcats", "hms", "blob;r", "rlang", "magrittr",
   "glue", "recipes", "rsample", "modelr")
 
+Sys.setenv(TZ = "America/Chicago")
+cur_time <- with_tz(ymd_hms(Sys.time(), tz = Sys.timezone()), "UTC")
+
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
   select(id = question_id, title, creation_date, link) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date)) %>%
   arrange(desc(creation_date)) %>%
-  filter(creation_date > ymd_hms(Sys.time()) - dminutes(5)) %>%
+  filter(creation_date > cur_time - dminutes(5)) %>%
   as.list()
 
 pwalk(.l = tidy_so, .f = function(id, title, creation_date, link) {
