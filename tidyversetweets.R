@@ -18,7 +18,7 @@ tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
   "glue", "recipes", "rsample", "modelr")
 
 Sys.setenv(TZ = "America/Chicago")
-cur_time <- with_tz(ymd_hms(Sys.time(), tz = Sys.timezone()), "UTC")
+cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
 
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
