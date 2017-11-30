@@ -27,6 +27,7 @@ source("~/.Rprofile")
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
   select(.data$title, .data$creation_date, .data$link) %>%
+  mutate(title = str_replace_all(title, "&#39;", "'")) %>%
   distinct() %>%
   mutate(creation_date = ymd_hms(creation_date, tz = Sys.timezone())) %>%
   arrange(creation_date) %>%
