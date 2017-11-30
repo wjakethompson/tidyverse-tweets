@@ -3,8 +3,8 @@ library(tidyverse)
 library(glue)
 library(lubridate)
 library(stackr)
+library(feedeR)
 library(rtweet)
-options(tibble.width = Inf)
 
 
 ### Query Stackoverflow API ----------------------------------------------------
@@ -20,19 +20,28 @@ tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
 
 Sys.setenv(TZ = "America/Chicago")
 cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
-cur_time
 
 source("~/.Rprofile")
 
 tidy_so <- map(tidyverse, query_tag) %>%
   map_dfr(~(.$result %>% as.tibble())) %>%
-  select(.data$title, .data$creation_date, .data$link) %>%
+  select(title, creation_date, link) %>%
   mutate(title = str_replace_all(title, "&#39;", "'")) %>%
   distinct() %>%
-  mutate(creation_date = ymd_hms(creation_date, tz = Sys.timezone())) %>%
+  mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
+  arrange(creation_date)
+
+tidy_rc <- feed.extract("https://community.rstudio.com/posts.rss") %>%
+  .[["items"]] %>%
+  as.tibble() %>%
+  select(title, creation_date = date, link) %>%
+  mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
+  arrange(creation_date)
+
+all_update <- bind_rows(tidy_so, tidy_rc) %>%
   arrange(creation_date) %>%
-  filter(creation_date > cur_time - dminutes(5)) %>%
-  as.list()
+  filter(creation_date > cur_time - dminutes(5))
+
 
 pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   if (nchar(title) > 250) {
