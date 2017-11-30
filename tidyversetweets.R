@@ -14,7 +14,7 @@ query_tag <- function(tag) {
 }
 
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
-  "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI",
+  "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI;r",
   "stringr", "lubridate", "forcats", "hms", "blob;r", "rlang", "magrittr",
   "glue", "recipes", "rsample", "modelr")
 
