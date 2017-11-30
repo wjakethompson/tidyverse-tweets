@@ -42,7 +42,6 @@ all_update <- bind_rows(tidy_so, tidy_rc) %>%
   arrange(creation_date) %>%
   filter(creation_date > cur_time - dminutes(5))
 
-
 pwalk(.l = tidy_so, .f = function(title, creation_date, link) {
   if (nchar(title) > 250) {
     trunc_points <- str_locate_all(title, " ") %>%
