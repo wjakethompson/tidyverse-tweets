@@ -34,12 +34,13 @@ tidy_so <- map(tidyverse, query_tag) %>%
   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
   arrange(creation_date)
 
-tidy_rc <- feed.extract("https://community.rstudio.com/posts.rss") %>%
-  .[["items"]] %>%
-  as.tibble() %>%
-  select(title, creation_date = date, link) %>%
-  mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
-  arrange(creation_date)
+# tidy_rc <- feed.extract("https://community.rstudio.com/posts.rss") %>%
+#   .[["items"]] %>%
+#   as.tibble() %>%
+#   select(title, creation_date = date, link) %>%
+#   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
+#   arrange(creation_date)
+tidy_rc <- NULL
 
 all_update <- bind_rows(tidy_so, tidy_rc) %>%
   arrange(creation_date) %>%
