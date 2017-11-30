@@ -11,6 +11,11 @@ library(rtweet)
 safe_query <- safely(stack_questions)
 query_tag <- function(tag) {
   query <- safe_query(pagesize = 100, tagged = tag)
+  return(query)
+}
+query_community <- function(category) {
+  query <- feed.extract(glue("https://community.rstudio.com/c/{category}.rss"))
+  return(query)
 }
 
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
@@ -34,13 +39,15 @@ tidy_so <- map(tidyverse, query_tag) %>%
   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
   arrange(creation_date)
 
-# tidy_rc <- feed.extract("https://community.rstudio.com/posts.rss") %>%
-#   .[["items"]] %>%
-#   as.tibble() %>%
-#   select(title, creation_date = date, link) %>%
-#   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
-#   arrange(creation_date)
-tidy_rc <- NULL
+rstudio <- c("tidyverse", "teaching")
+
+tidy_rc <- map(rstudio, query_community) %>%
+  map_dfr(~(.$items %>% as.tibble())) %>%
+  select(title, creation_date = date, link) %>%
+  mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
+  group_by(title) %>%
+  top_n(n = -1, wt = creation_date) %>%
+  arrange(creation_date)
 
 all_update <- bind_rows(tidy_so, tidy_rc) %>%
   arrange(creation_date) %>%
