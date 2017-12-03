@@ -1,7 +1,7 @@
 #!/bin/bash
 #MSUB -N tidytweet
-#MSUB -l nodes=1:ppn=1:ib,walltime=00:00:2:00
-#MSUB -l pmem=1gb
+#MSUB -l nodes=1:ppn=1:ib,walltime=00:00:10:00
+#MSUB -l pmem=5gb
 #MSUB -M tidytweet@gmail.com
 #MSUB -m a
 #MSUB -j oe
