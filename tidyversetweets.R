@@ -33,7 +33,11 @@ tidy_so <- map(tidyverse, query_tag) %>%
   select(title, creation_date, link) %>%
   mutate(
     title = str_replace_all(title, "&#39;", "'"),
-    title = str_replace_all(title, "&quot;", '"')
+    title = str_replace_all(title, "&quot;", '"'),
+    title = str_replace_all(title, "&amp;&#160;", "& "),
+    title = str_replace_all(title, "&gt;", ">"),
+    title = str_replace_all(title, "&lt;", "<"),
+    title = str_replace_all(title, "&amp;", "&")
   ) %>%
   distinct() %>%
   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
