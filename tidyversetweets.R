@@ -6,6 +6,8 @@ library(stackr)
 library(feedeR)
 library(rtweet)
 
+Sys.info()
+
 
 ### Query Stackoverflow API ----------------------------------------------------
 safe_query <- safely(stack_questions)
