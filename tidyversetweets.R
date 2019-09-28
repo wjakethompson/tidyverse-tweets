@@ -45,7 +45,8 @@ tidy_so <- map(tidyverse, query_tag) %>%
   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
   arrange(creation_date)
 
-rstudio <- c("tidyverse", "teaching")
+rstudio <- c("tidyverse", "teaching", "general", "R-Markdown", "shiny",
+             "package-development")
 
 tidy_rc <- map(rstudio, query_community) %>%
   map_dfr(~(.$items %>% as_tibble())) %>%
