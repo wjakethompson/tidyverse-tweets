@@ -31,7 +31,7 @@ cur_time <- ymd_hms(Sys.time(), tz = Sys.timezone())
 source("~/.Rprofile")
 
 tidy_so <- map(tidyverse, query_tag) %>%
-  map_dfr(~(.$result %>% as.tibble())) %>%
+  map_dfr(~(.$result %>% as_tibble())) %>%
   select(title, creation_date, link) %>%
   mutate(
     title = str_replace_all(title, "&#39;", "'"),
@@ -48,7 +48,7 @@ tidy_so <- map(tidyverse, query_tag) %>%
 rstudio <- c("tidyverse", "teaching")
 
 tidy_rc <- map(rstudio, query_community) %>%
-  map_dfr(~(.$items %>% as.tibble())) %>%
+  map_dfr(~(.$items %>% as_tibble())) %>%
   select(title, creation_date = date, link) %>%
   mutate(creation_date = with_tz(creation_date, tz = "America/Chicago")) %>%
   group_by(title) %>%
