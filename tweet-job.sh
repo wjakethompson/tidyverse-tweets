@@ -14,4 +14,4 @@ cd $SLURM_SUBMIT_DIR
 
 module load R rstan
 
-R --vanilla -f tidyversetweets.R
+R --vanilla -f test-tweet.R
