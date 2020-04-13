@@ -14,4 +14,5 @@ cd $SLURM_SUBMIT_DIR
 
 module load R rstan
 
+git pull
 R --vanilla -f tidyversetweets.R
