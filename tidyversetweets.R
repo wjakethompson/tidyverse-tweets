@@ -48,6 +48,9 @@ rstudio <- c("tidyverse", "teaching", "general", "R-Markdown", "shiny",
 tidy_rc <- map(rstudio, query_community) %>%
   map_dfr(~(.$items %>% as_tibble())) %>%
   select(title, creation_date = date, link) %>%
+  mutate(
+    title = str_replace_all(title, "\u2018|\u2019", "\u0027")
+  ) %>%
   mutate(creation_date = with_tz(creation_date, tz = "UTC")) %>%
   group_by(title) %>%
   top_n(n = -1, wt = creation_date) %>%
