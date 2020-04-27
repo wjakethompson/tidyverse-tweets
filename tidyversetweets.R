@@ -36,7 +36,8 @@ tidy_so <- map(tidyverse, query_tag) %>%
     title = str_replace_all(title, "&amp;&#160;", "& "),
     title = str_replace_all(title, "&gt;", ">"),
     title = str_replace_all(title, "&lt;", "<"),
-    title = str_replace_all(title, "&amp;", "&")
+    title = str_replace_all(title, "&amp;", "&"),
+    title = str_replace_all(title, "&#180;", "`")
   ) %>%
   distinct() %>%
   mutate(creation_date = with_tz(creation_date, tz = "UTC")) %>%
