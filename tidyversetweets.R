@@ -8,6 +8,20 @@ library(rtweet)
 
 Sys.info()
 
+### Functions ------------------------------------------------------------------
+fix_special <- function(x) {
+  ints <- utf8ToInt(x)
+  
+  # remove arrows
+  arrow <- which(ints == 10132L)
+  for (i in seq_along(arrow)) {
+    ints <- c(ints[1:(arrow[i] - 1)], 45L, 62L,
+              ints[(arrow[i] + 1):length(ints)])
+  }
+  
+  intToUtf8(ints)
+}
+
 
 ### Query Stackoverflow API ----------------------------------------------------
 safe_query <- safely(stack_questions)
@@ -51,7 +65,8 @@ tidy_rc <- map(rstudio, query_community) %>%
   map_dfr(~(.$items %>% as_tibble())) %>%
   select(title, creation_date = date, link) %>%
   mutate(
-    title = str_replace_all(title, "\u2018|\u2019", "\u0027")
+    title = str_replace_all(title, "\u2018|\u2019", "'"),
+    title = map_chr(title, fix_special)
   ) %>%
   mutate(creation_date = with_tz(creation_date, tz = "UTC")) %>%
   group_by(title) %>%
