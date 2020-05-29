@@ -37,7 +37,8 @@ query_community <- function(category) {
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
   "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI;r",
   "stringr", "lubridate", "forcats", "hms", "blob;r", "rlang", "magrittr",
-  "glue", "recipes", "rsample", "modelr")
+  "glue", "recipes", "rsample", "modelr", "r-markdown", "bookdown", "blogdown",
+  "xaringan")
 
 source("~/.Rprofile")
 
@@ -59,7 +60,7 @@ tidy_so <- map(tidyverse, query_tag) %>%
   arrange(creation_date)
 
 rstudio <- c("tidyverse", "teaching", "general", "R-Markdown", "shiny",
-             "package-development")
+             "package-development", "ml")
 
 tidy_rc <- map(rstudio, query_community) %>%
   map_dfr(~(.$items %>% as_tibble())) %>%
