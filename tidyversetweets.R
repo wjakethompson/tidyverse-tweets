@@ -36,7 +36,7 @@ query_community <- function(category) {
 
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
   "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest", "DBI;r",
-  "stringr", "lubridate", "forcats", "hms", "blob;r", "rlang", "magrittr",
+  "stringr", "lubridate", "forcats", "hms;r", "blob;r", "rlang", "magrittr",
   "glue", "recipes", "rsample", "modelr", "r-markdown", "bookdown", "blogdown",
   "xaringan")
 
