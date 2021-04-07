@@ -1,8 +1,6 @@
 on:
-  push:
-    branches:
-      - main
-      - master
+  schedule:
+    - cron: '*/5 * * * *'
 
 name: tidyversetweets-bot
 
@@ -41,4 +39,4 @@ jobs:
         shell: Rscript {0}
         
       - name: Post tweets
-        run: Rscript test-tweet.R
+        run: Rscript tidyversetweets.R
