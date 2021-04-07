@@ -1,9 +1,9 @@
 on: workflow_dispatch
 
-name: tidyversetweets-bot
+name: test-tweet
 
 jobs:
-  tidyversetweets-bot-post:
+  test-tweet-post:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
