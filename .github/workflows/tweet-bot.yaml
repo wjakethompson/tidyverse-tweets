@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: r-1-${{ hasFiles('DESCRIPTION') }}
+          key: r-1-${{ hashFiles('DESCRIPTION') }}
           restore-keys: r-1-
   
       - name: Install pak
