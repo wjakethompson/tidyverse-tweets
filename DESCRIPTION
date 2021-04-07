@@ -1,0 +1,25 @@
+Package: tidyversetweets
+Title: tidyversetweets is not really an R pakcage, but this is here to list
+    the dependencies for running the tidyversetweets Twitter bot.
+Version: 0.1
+Authors@R:
+    person(given = "W. Jake",
+           family = "Thompson",
+           role = c("aut", "cre"),
+           email = "wjakethompson@gmail.com")
+URL: https://github.com/wjakethompson/tidyverse-tweets
+Depends:
+    R (>= 4.0.0)
+Imports:
+    dplyr,
+    feedeR,
+    glue,
+    lubridate,
+    purrr,
+    rtweet,
+    stackr,
+    stringr,
+    tibble
+Remotes:
+    dgrtwo/stackr
+Encoding: UTF-8
