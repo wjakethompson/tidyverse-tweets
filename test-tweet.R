@@ -15,4 +15,11 @@ bot_token <- create_token(
   set_renv = FALSE
 )
 
-post_tweet("test tweet", token = bot_token)
+test_num <- tibble(num = 2)
+
+pwalk(test_num,
+      .f = function(num, token) {
+        status <- glue("test tweet{num}")
+        post_tweet(status, token = token)
+      },
+      token = bot_token)

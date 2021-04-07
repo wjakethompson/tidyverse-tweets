@@ -100,15 +100,17 @@ all_update <- bind_rows(tidy_so, tidy_rc) %>%
   arrange(creation_date) %>%
   filter(creation_date > last_tweet)
 
-pwalk(all_update, .f = function(title, creation_date, link) {
-  if (nchar(title) > 250) {
-    trunc_points <- str_locate_all(title, " ") %>%
-      .[[1]] %>%
-      .[,1]
-    trunc <- max(trunc_points[which(trunc_points < 247)]) - 1
-    title <- paste0(str_sub(title, start = 1, end = trunc), "...")
-  }
-  
-  tweet_text <- glue("{title} #tidyverse #rstats {link}")
-  post_tweet(tweet_text, token = bot_token)
-})
+pwalk(all_update,
+      .f = function(title, creation_date, link, token) {
+        if (nchar(title) > 250) {
+          trunc_points <- str_locate_all(title, " ") %>%
+            .[[1]] %>%
+            .[,1]
+          trunc <- max(trunc_points[which(trunc_points < 247)]) - 1
+          title <- paste0(str_sub(title, start = 1, end = trunc), "...")
+        }
+        
+        tweet_text <- glue("{title} #tidyverse #rstats {link}")
+        post_tweet(tweet_text, token = token)
+      },
+      token = bot_token)
