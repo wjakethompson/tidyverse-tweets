@@ -2,6 +2,7 @@ library(rtweet)
 library(lubridate)
 library(glue)
 library(tibble)
+library(purrr)
 
 cur_time <- now()
 
