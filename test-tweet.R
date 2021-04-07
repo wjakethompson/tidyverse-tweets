@@ -6,7 +6,7 @@ cur_time <- now()
 with_tz(cur_time, tzone = "UTC")
 with_tz(cur_time, tzone = "America/Chicago")
 
-create_token(
+bot_token <- create_token(
   app = "tidyverse_tweets",
   consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
   consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
@@ -15,4 +15,4 @@ create_token(
   set_renv = FALSE
 )
 
-post_tweet("test tweet")
+post_tweet("test tweet", token = bot_token)
