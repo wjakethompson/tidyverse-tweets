@@ -32,8 +32,6 @@ query_tag <- function(tag) {
   return(query)
 }
 
-Sys.setenv(STACK_EXCHANGE_KEY = "OX0Slpm1*EXldYd5wMEH8g((")
-
 tidyverse <- c("tidyverse", "ggplot2", "dplyr", "tidyr", "readr", "purrr",
                "tibble", "readxl", "haven", "jsonlite", "xml2", "httr", "rvest",
                "DBI;r", "stringr", "lubridate", "forcats", "hms;r", "blob;r",
