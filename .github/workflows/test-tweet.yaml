@@ -37,4 +37,4 @@ jobs:
         shell: Rscript {0}
         
       - name: Post tweets
-        run: Rscript tidyversetweets.R
+        run: Rscript test-tweet.R
