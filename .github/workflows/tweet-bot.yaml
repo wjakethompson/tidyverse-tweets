@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+
+name: tidyversetweets-bot
+
+jobs:
+  R-CMD-check:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+      TWITTER_CONSUMER_API_SECRET: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
+      TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+      TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+      STACK_EXCHANGE_KEY: ${{ secrets.STACK_EXCHANGE_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+  
+      - name: Setup R 
+        uses: r-lib/actions/setup-r@master
+  
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: r-1-${{ hasFiles('DESCRIPTION') }}
+          restore-keys: r-1-
+  
+      - name: Install pak
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev")
+        shell: Rscript {0}
+  
+      - name: Install dependencies
+        run: |
+          pak::local_install_dev_deps(upgrade = TRUE)
+        shell: Rscript {0}
+        
+      - name: Post tweets
+        run: Rscript test-tweet.R
