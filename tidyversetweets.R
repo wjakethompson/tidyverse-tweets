@@ -84,7 +84,7 @@ tidy_rc <- map(rstudio, query_community) %>%
 
 
 ### Tweet ----------------------------------------------------------------------
-create_token(
+bot_token <- create_token(
   app = "tidyverse_tweets",
   consumer_key = Sys.getenv("TWITTER_CONSUMER_API_KEY"),
   consumer_secret = Sys.getenv("TWITTER_CONSUMER_API_SECRET"),
@@ -112,5 +112,5 @@ pwalk(all_update, .f = function(title, creation_date, link) {
   }
   
   tweet_text <- glue("{title} #tidyverse #rstats {link}")
-  post_tweet(tweet_text)
+  post_tweet(tweet_text, token = bot_token)
 })
