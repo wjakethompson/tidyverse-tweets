@@ -91,7 +91,7 @@ bot_token <- create_token(
   set_renv = FALSE
 )
 
-last_tweet <- get_timeline("tidyversetweets", n = 100) %>%
+last_tweet <- get_timeline("tidyversetweets", n = 100, token = bot_token) %>%
   slice_max(order_by = created_at, n = 1) %>%
   pull(created_at) %>%
   with_tz(tzone = "UTC")
