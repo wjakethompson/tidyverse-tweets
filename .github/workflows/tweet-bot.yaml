@@ -12,13 +12,6 @@ name: tidyversetweets-bot
 jobs:
   tidyversetweets-bot-post:
     runs-on: macOS-latest
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: macOS-latest,   r: '3.6'}
-          
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
@@ -32,6 +25,8 @@ jobs:
   
       - name: Setup R 
         uses: r-lib/actions/setup-r@master
+        with:
+          r-version: 4.0
   
       - name: Cache R packages
         uses: actions/cache@v1
