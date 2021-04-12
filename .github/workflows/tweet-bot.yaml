@@ -3,9 +3,9 @@ on:
     branches:
       - master
       - main
-  schedule:
-    # run every 5 mintues
-    - cron: '*/5 * * * *'
+  # schedule:
+  #   # run every 5 mintues
+  #   - cron: '*/5 * * * *'
 
 name: tidyversetweets-bot
 
@@ -25,9 +25,7 @@ jobs:
   
       - name: Setup R 
         uses: r-lib/actions/setup-r@master
-        with:
-          r-version: 3.6
-  
+
       - name: Cache R packages
         uses: actions/cache@v1
         with:
