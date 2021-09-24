@@ -1,7 +1,6 @@
 on:
   push:
     branches:
-      - master
       - main
   schedule:
     # run every 5 mintues
@@ -11,7 +10,7 @@ name: tidyversetweets-bot
 
 jobs:
   tidyversetweets-bot-post:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       TWITTER_CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
@@ -25,23 +24,11 @@ jobs:
   
       - name: Setup R 
         uses: r-lib/actions/setup-r@master
-
-      - name: Cache R packages
-        uses: actions/cache@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: r-1-${{ hashFiles('DESCRIPTION') }}
-          restore-keys: r-1-
-  
-      - name: Install pak
-        run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev")
-        shell: Rscript {0}
-  
-      - name: Install dependencies
-        run: |
-          pak::local_install_dev_deps(upgrade = TRUE)
-        shell: Rscript {0}
-        
+          use-public-rspm: true
+          
+      - name: R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v1
+
       - name: Post tweets
         run: Rscript tidyversetweets.R
