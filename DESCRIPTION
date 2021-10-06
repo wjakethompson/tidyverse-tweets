@@ -21,5 +21,6 @@ Imports:
     stringr,
     tibble
 Remotes:
-    dgrtwo/stackr
+    dgrtwo/stackr,
+    datawookie/feedeR
 Encoding: UTF-8
