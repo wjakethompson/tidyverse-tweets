@@ -29,6 +29,8 @@ jobs:
           
       - name: R dependencies
         uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          cache-version: 2
 
       - name: Post tweets
         run: Rscript tidyversetweets.R
