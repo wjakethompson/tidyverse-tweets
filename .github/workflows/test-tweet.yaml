@@ -5,7 +5,7 @@ name: test-tweet
 jobs:
   test-tweet-post:
     
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
