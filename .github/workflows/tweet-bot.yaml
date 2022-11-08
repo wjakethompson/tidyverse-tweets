@@ -22,14 +22,14 @@ jobs:
       STACK_EXCHANGE_KEY: ${{ secrets.STACK_EXCHANGE_KEY }}
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
   
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: 'release'
           use-public-rspm: true
           
-      - uses: r-lib/actions/setup-r-dependencies@v1
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 3
 
